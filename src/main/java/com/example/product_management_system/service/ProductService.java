@@ -6,10 +6,8 @@ import com.example.product_management_system.exception.AlreadyExist;
 import com.example.product_management_system.model.Product;
 import com.example.product_management_system.model.ProductCategoryTree;
 import com.example.product_management_system.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -41,7 +39,22 @@ public void addProduct(ProductDTO productDTO) {
 }
 
 public List<Product> searchProductInCategory(String categoryName, String productName) {
-    System.out.println(productCategoryTree+ " ttttttttttttttttttttttttt");
     return productCategoryTree.searchProductInCategory(categoryName, productName);
 }
+
+@Transactional
+public boolean deleteProduct(String productName, String categoryName) {
+  boolean deleted = productCategoryTree.deleteProduct(productName, categoryName);
+  if(deleted){
+      productRepository.deleteByProductName(productName);
+  }
+    System.out.println(deleted);
+  return deleted;
+}
+
+    public  List<Product> getProductsByCategory(String categoryName) {
+        return productCategoryTree.getProductInCategory(categoryName);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.product_management_system.service;
 
+import com.example.product_management_system.dto.ProductDTO;
 import com.example.product_management_system.exception.AlreadyExist;
 import com.example.product_management_system.model.Category;
 import com.example.product_management_system.model.Product;
@@ -49,7 +50,4 @@ public class CategoryService {
         }
     }
 
-  public  List<Product> getProductsByCategory(String categoryName) {
-        return productCategoryTree.getProductInCategory(categoryName);
-    }
 }

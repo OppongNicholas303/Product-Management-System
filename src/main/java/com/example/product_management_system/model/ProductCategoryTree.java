@@ -67,4 +67,15 @@ public class ProductCategoryTree {
         }
     }
 
+    public boolean deleteProduct(String productName, String categoryName) {
+        System.out.println(root + " cliick");
+        CategoryNode categoryNode = findCategory(root, categoryName);
+        if (categoryNode == null) {
+            return false;
+        }
+
+        return categoryNode.getProducts().removeIf(product -> product.getProductName().equals(productName));
+    }
+
+
 }

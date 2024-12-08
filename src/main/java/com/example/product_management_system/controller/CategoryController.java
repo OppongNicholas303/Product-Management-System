@@ -29,11 +29,4 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Category created");
     }
 
-@GetMapping("/product-by-category")
-    public ResponseEntity<List<Product>>  getCategory(
-           @RequestBody CategoryDTO categoryDTO
-) {
-        List<Product> products = categoryService.getProductsByCategory(categoryDTO.categoryName());
-        return ResponseEntity.status(HttpStatus.OK).body(products);
-}
 }
