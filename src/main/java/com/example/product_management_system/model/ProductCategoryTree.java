@@ -1,15 +1,19 @@
 package com.example.product_management_system.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ProductCategoryTree {
     CategoryNode root;
 
     public void  insertCategory(String categoryName){
         root = insertCategoryRec(root, categoryName);
     }
+
 
     private CategoryNode insertCategoryRec(CategoryNode node, String categoryName){
         if(node == null){
@@ -22,6 +26,7 @@ public class ProductCategoryTree {
         }else {
             node.setRight(insertCategoryRec(node.getRight(), categoryName));
         }
+
         return node;
     }
 
@@ -53,6 +58,7 @@ public class ProductCategoryTree {
         if(root == null || categoryName.equals(root.getCategoryName())){
             return node;
         }
+
         int comparison = categoryName.compareTo(node.getCategoryName());
         if(comparison < 0){
             return findCategory(node.getLeft(), categoryName);
@@ -60,5 +66,16 @@ public class ProductCategoryTree {
             return findCategory(node.getRight(), categoryName);
         }
     }
+
+    public boolean deleteProduct(String productName, String categoryName) {
+        System.out.println(root + " cliick");
+        CategoryNode categoryNode = findCategory(root, categoryName);
+        if (categoryNode == null) {
+            return false;
+        }
+
+        return categoryNode.getProducts().removeIf(product -> product.getProductName().equals(productName));
+    }
+
 
 }
