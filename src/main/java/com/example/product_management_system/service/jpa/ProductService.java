@@ -1,16 +1,18 @@
-package com.example.product_management_system.service;
+package com.example.product_management_system.service.jpa;
 
 import com.example.product_management_system.Mapper.Mapping;
 import com.example.product_management_system.dto.ProductDTO;
 import com.example.product_management_system.exception.AlreadyExist;
-import com.example.product_management_system.model.Product;
-import com.example.product_management_system.model.ProductCategoryTree;
-import com.example.product_management_system.repository.ProductRepository;
+import com.example.product_management_system.model.jpa.Product;
+import com.example.product_management_system.model.jpa.ProductCategoryTree;
+import com.example.product_management_system.repository.jpa.ProductRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Profile("default")
 public class ProductService {
 private ProductRepository productRepository;
 private ProductCategoryTree productCategoryTree;
@@ -33,6 +35,7 @@ public void addProduct(ProductDTO productDTO) {
        Mapping productMapping = new Mapping();
        Product product = productMapping.toProduct(productDTO);
        productRepository.save(product);
+      // productCategoryTree.addProduct();
    }catch (Exception e){
        e.printStackTrace();
    }

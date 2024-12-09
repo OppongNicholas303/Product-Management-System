@@ -1,21 +1,19 @@
-package com.example.product_management_system.controller;
+package com.example.product_management_system.controller.mongodb;
 
 import com.example.product_management_system.dto.CategoryDTO;
-import com.example.product_management_system.model.Category;
-import com.example.product_management_system.model.Product;
-import com.example.product_management_system.service.CategoryService;
+import com.example.product_management_system.service.mongodb.CategoryServiceForMongodb;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@Profile("prod")
 @RequestMapping("/api/v1")
-public class CategoryController {
-    private final CategoryService categoryService;
+public class MongodbCategoryController {
+    private final CategoryServiceForMongodb categoryService;
 
-    public CategoryController(CategoryService categoryService) {
+    public MongodbCategoryController(CategoryServiceForMongodb categoryService) {
         this.categoryService = categoryService;
     }
 

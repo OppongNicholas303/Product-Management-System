@@ -1,4 +1,4 @@
-package com.example.product_management_system.model;
+package com.example.product_management_system.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

@@ -1,17 +1,18 @@
-package com.example.product_management_system.service;
+package com.example.product_management_system.service.jpa;
 
-import com.example.product_management_system.dto.ProductDTO;
 import com.example.product_management_system.exception.AlreadyExist;
-import com.example.product_management_system.model.Category;
-import com.example.product_management_system.model.Product;
-import com.example.product_management_system.model.ProductCategoryTree;
-import com.example.product_management_system.repository.CategoryRepository;
+import com.example.product_management_system.model.jpa.Category;
+import com.example.product_management_system.model.jpa.Product;
+import com.example.product_management_system.model.jpa.ProductCategoryTree;
+import com.example.product_management_system.repository.jpa.CategoryRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Profile("default")
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;

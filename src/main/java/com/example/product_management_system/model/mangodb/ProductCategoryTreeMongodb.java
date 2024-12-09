@@ -1,4 +1,4 @@
-package com.example.product_management_system.model;
+package com.example.product_management_system.model.mangodb;
 
 import org.springframework.stereotype.Component;
 
@@ -7,17 +7,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ProductCategoryTree {
-    CategoryNode root;
+public class ProductCategoryTreeMongodb {
+    CategoryNodeMongodb root;
 
     public void  insertCategory(String categoryName){
         root = insertCategoryRec(root, categoryName);
     }
 
-
-    private CategoryNode insertCategoryRec(CategoryNode node, String categoryName){
+    private CategoryNodeMongodb insertCategoryRec(CategoryNodeMongodb node, String categoryName){
         if(node == null){
-            return new CategoryNode(categoryName);
+            return new CategoryNodeMongodb(categoryName);
         }
 
         int comparison = categoryName.compareTo(node.getCategoryName());
@@ -30,23 +29,23 @@ public class ProductCategoryTree {
         return node;
     }
 
-    public List<Product> getProductInCategory(String categoryName){
-        CategoryNode categoryNode = findCategory(root, categoryName);
+    public List<ProductForMongodb> getProductInCategory(String categoryName){
+        CategoryNodeMongodb categoryNode = findCategory(root, categoryName);
 
-        return categoryNode != null ? categoryNode.getProducts() : new ArrayList<>();
+        return categoryNode != null ? categoryNode.getMongoProducts() : new ArrayList<>();
     }
 
-    public void addProduct(Product product, String categoryName){
-        CategoryNode categoryNode = findCategory(root, categoryName);
+    public void addProduct(ProductForMongodb product, String categoryName){
+        CategoryNodeMongodb categoryNode = findCategory(root, categoryName);
         if(categoryNode != null){
-            categoryNode.getProducts().add(product);
+            categoryNode.getMongoProducts().add(product);
         }
     }
 
-    public List<Product> searchProductInCategory(String categoryName, String productName){
-        CategoryNode categoryNode = findCategory(root, categoryName);
+    public List<ProductForMongodb> searchProductInCategory(String categoryName, String productName){
+        CategoryNodeMongodb categoryNode = findCategory(root, categoryName);
         if (categoryNode != null) {
-            return categoryNode.getProducts()
+            return categoryNode.getMongoProducts()
                     .stream()
                     .filter(product -> product.getProductName().equalsIgnoreCase(productName))
                     .collect(Collectors.toList());
@@ -54,7 +53,7 @@ public class ProductCategoryTree {
         return new ArrayList<>();
     }
 
-    private CategoryNode findCategory(CategoryNode node, String categoryName){
+    private CategoryNodeMongodb findCategory(CategoryNodeMongodb node, String categoryName){
         if(root == null || categoryName.equals(root.getCategoryName())){
             return node;
         }
@@ -69,12 +68,12 @@ public class ProductCategoryTree {
 
     public boolean deleteProduct(String productName, String categoryName) {
         System.out.println(root + " cliick");
-        CategoryNode categoryNode = findCategory(root, categoryName);
+        CategoryNodeMongodb categoryNode = findCategory(root, categoryName);
         if (categoryNode == null) {
             return false;
         }
 
-        return categoryNode.getProducts().removeIf(product -> product.getProductName().equals(productName));
+        return categoryNode.getMongoProducts().removeIf(product -> product.getProductName().equals(productName));
     }
 
 

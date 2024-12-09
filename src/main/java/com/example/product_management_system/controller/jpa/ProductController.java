@@ -1,11 +1,12 @@
-package com.example.product_management_system.controller;
+package com.example.product_management_system.controller.jpa;
 
 import com.example.product_management_system.dto.CategoryDTO;
 import com.example.product_management_system.dto.ProductDTO;
-import com.example.product_management_system.model.Product;
-import com.example.product_management_system.service.CategoryService;
-import com.example.product_management_system.service.ProductService;
+import com.example.product_management_system.model.jpa.Product;
+import com.example.product_management_system.service.jpa.CategoryService;
+import com.example.product_management_system.service.jpa.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Profile("default")
 @RequestMapping("/api/v1/product")
 public class ProductController {
     private ProductService productService;
@@ -23,8 +25,6 @@ public class ProductController {
         this.productService = productService;
         this.categoryService = categoryService;
     }
-
-
 
     @PostMapping("/add-product")
     public ResponseEntity<String> addProduct(
