@@ -27,9 +27,9 @@ public class CategoryService {
         this.productCategoryTree = productCategoryTree;
     }
 
+    // Runs when the program start to load the products in the binary tree
     @PostConstruct
     public void init() {
-//        this.productCategoryTree = new ProductCategoryTree();
         List<Category> categories = categoryRepository.findAll();
         for (Category category : categories) {
             productCategoryTree.insertCategory(category.getCategoryName());
@@ -50,5 +50,7 @@ public class CategoryService {
             throw new AlreadyExist(categoryName + " already exist");
         }
     }
+
+
 
 }

@@ -12,7 +12,9 @@ public class CategoryNodeMongodb {
     private String categoryName;
     private CategoryNodeMongodb left;
     private CategoryNodeMongodb right;
-    private List<ProductForMongodb> mongoProducts;
+//    private List<ProductForMongodb> mongoProducts;
+private List<ProductForMongodb> mongoProducts = new ArrayList<>();
+
 
     public CategoryNodeMongodb(
             String categoryName
@@ -20,7 +22,7 @@ public class CategoryNodeMongodb {
         this.categoryName = categoryName;
         this.left = null;
         this.right = null;
-        mongoProducts = new ArrayList<>();
+//        mongoProducts = new ArrayList<>();
     }
 
 }

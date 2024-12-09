@@ -7,6 +7,7 @@ import com.example.product_management_system.service.jpa.CategoryService;
 import com.example.product_management_system.service.jpa.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,6 @@ public class ProductController {
          @PathVariable("category-name") String categoryName,
          @PathVariable("product-name") String productName
     ){
-        System.out.println(productName + " " + categoryName);
        boolean deleted = productService.deleteProduct(productName, categoryName);
        return new ResponseEntity<>(deleted ? "Product deleted" : "Product not deleted", HttpStatus.OK);
     }
@@ -60,6 +60,25 @@ public class ProductController {
     ) {
         List<Product> products = productService.getProductsByCategory(categoryDTO.categoryName());
         return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
+
+    @GetMapping("/find-by-page")
+    public ResponseEntity<Page<Product>> findProductsByPage(
+            @RequestParam(defaultValue="0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        Page<Product> product = productService.getProductByPage(page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(product);
+    }
+
+    @PutMapping("/update-product/{category-name}/{product-name}/{id}")
+    public void updateProduct(
+            @RequestBody Product product,
+            @PathVariable("id") String id,
+            @PathVariable("category-name") String categoryName,
+            @PathVariable("product-name") String productName
+    ){
+        productService.updateProduct(product, id, categoryName, productName);
     }
 
 }

@@ -15,8 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 //        WebMvcConfigurer.super.addInterceptors(registry);
 
-        registry.addInterceptor(new LogHandlerIntercepter()).order(1);
-        registry.addInterceptor(new AuthHandlerIntercepter()).order(2);
+        registry.addInterceptor(new LogHandlerIntercepter()).order(2);
+        registry.addInterceptor(new AuthHandlerIntercepter()).order(1).addPathPatterns("/api/v1/add-product", "/api/v1/add-category", "/update-product/{category-name}/{product-name}/{id}");
 
     }
 

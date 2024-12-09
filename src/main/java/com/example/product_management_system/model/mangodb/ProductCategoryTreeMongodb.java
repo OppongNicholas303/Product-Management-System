@@ -67,7 +67,6 @@ public class ProductCategoryTreeMongodb {
     }
 
     public boolean deleteProduct(String productName, String categoryName) {
-        System.out.println(root + " cliick");
         CategoryNodeMongodb categoryNode = findCategory(root, categoryName);
         if (categoryNode == null) {
             return false;

@@ -28,14 +28,21 @@ public class CategoryServiceForMongodb {
 
     @PostConstruct
     public void init() {
-//        this.productCategoryTree = new ProductCategoryTree();
-        List<CategoryForMongodb> categories = categoryRepository.findAll();
+        List<CategoryForMongodb> categories = categoryRepository.findAllCategoriesWithProducts();
+
         for (CategoryForMongodb category : categories) {
+            System.out.println("product," + category.getProductsForMongodb().get(0).getProductPrice());
             productCategoryTree.insertCategory(category.getCategoryName());
-            for (ProductForMongodb product : category.getProductsForMongodb()) {
-                productCategoryTree.addProduct(product, category.getCategoryName());
+            List<ProductForMongodb> products = category.getProductsForMongodb();
+
+            if (products != null) {
+                for (ProductForMongodb product : products) {
+                    System.out.println("product," + product.getProductName());
+                    productCategoryTree.addProduct(product, category.getCategoryName());
+                }
             }
         }
+
 
     }
 

@@ -14,7 +14,7 @@ public class Mapping {
         product.setProductDescription(productDTO.productDescription());
         product.setProductPrice(productDTO.productPrice());
         Category category = new Category();
-        category.setCategoryId(productDTO.category());
+        category.setCategoryId(Integer.parseInt(productDTO.category()));
         product.setCategory(category);
         return product;
 
@@ -29,6 +29,6 @@ public class Mapping {
         category.setCategoryIdString(String.valueOf(productDTO.category()));
         product.setCategory(category);
         return product;
-
     }
+
 }

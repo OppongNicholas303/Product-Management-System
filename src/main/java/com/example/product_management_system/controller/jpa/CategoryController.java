@@ -17,12 +17,10 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-
     @PostMapping("/add-category")
     public ResponseEntity<String> addCategory(
             @RequestBody CategoryDTO categoryDTO
     ) {
-
         categoryService.addCategory(categoryDTO.categoryName());
         return ResponseEntity.status(HttpStatus.CREATED).body("Category created");
     }

@@ -13,7 +13,6 @@ public class CategoryNode {
     private CategoryNode right;
     private List<Product> products;
 
-
     public CategoryNode(
             String categoryName
     ){
