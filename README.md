@@ -60,7 +60,7 @@ Example Request:
 ```
 
 **Delete Product:**
-`DELETE /api/v1/product/Electronics/products/Television`
+`DELETE /api/v1/product/{category}/products/{product}`
 
 **Search Product in Category:**
 `GET /api/v1/product/search-product-in-category?category-name=Electronics&product-name=Television`
@@ -72,7 +72,7 @@ Example Request:
 `GET /api/v1/product/find-by-page?page=0&size=10`
 
 **Update Product (Admin Only):**
-`PUT /api/v1/product/update-product/Electronics/Radio/5`
+`PUT /api/v1/product/update-product/{category}/{product-name}/5`
 Example Request:
 ```json
 {
