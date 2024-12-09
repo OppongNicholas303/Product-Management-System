@@ -1,5 +1,6 @@
 package com.example.product_management_system.interceptor;
 
+import com.example.product_management_system.exception.NotFound;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +40,27 @@ public class AuthHandlerIntercepter implements HandlerInterceptor {
             HttpServletRequest request,
             HttpServletResponse response,
             Object handler
-    ) throws Exception
-    {
+    ) throws Exception {
+        // Extract Authorization header
+        String authHeader = request.getHeader("Authorization");
 
-        log.info("AuthIntercepter.preHandle");
-        return HandlerInterceptor.super.preHandle(request, response, handler);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+
+            if ("admin".equalsIgnoreCase(token)) {
+                log.info("Access granted for role: {}", token);
+                return true;
+            } else {
+                log.warn("Access denied for role: {}", token);
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN); // Forbidden
+                response.getWriter().write("Access Denied: Insufficient permissions.");
+                return false;
+            }
+        } else {
+            log.warn("Authorization header not found or malformed.");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Unauthorized
+            response.getWriter().write("Unauthorized: Missing or invalid Authorization header.");
+            return false;
+        }
     }
 }

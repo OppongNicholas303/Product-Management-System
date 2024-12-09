@@ -1,5 +1,6 @@
-package com.example.product_management_system.model;
+package com.example.product_management_system.model.jpa;
 
+import com.example.product_management_system.model.mangodb.ProductForMongodb;
 import lombok.Data;
 
 import java.util.ArrayList;
