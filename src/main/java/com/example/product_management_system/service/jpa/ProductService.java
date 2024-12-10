@@ -3,10 +3,14 @@ package com.example.product_management_system.service.jpa;
 import com.example.product_management_system.Mapper.Mapping;
 import com.example.product_management_system.dto.ProductDTO;
 import com.example.product_management_system.exception.AlreadyExist;
+import com.example.product_management_system.exception.NotFound;
+import com.example.product_management_system.model.jpa.Category;
 import com.example.product_management_system.model.jpa.Product;
 import com.example.product_management_system.model.jpa.ProductCategoryTree;
+import com.example.product_management_system.repository.jpa.CategoryRepository;
 import com.example.product_management_system.repository.jpa.ProductRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 
 import org.springframework.stereotype.Service;
@@ -23,14 +27,18 @@ import java.util.Optional;
 public class ProductService {
 private ProductRepository productRepository;
 private ProductCategoryTree productCategoryTree;
+private CategoryRepository categoryRepository;
 
-
+@Autowired
 public ProductService(
-        ProductRepository productRepository
-        , ProductCategoryTree productCategoryTree)
+        ProductRepository productRepository,
+        ProductCategoryTree productCategoryTree,
+        CategoryRepository categoryRepository
+)
 {
     this.productRepository = productRepository;
     this.productCategoryTree = productCategoryTree;
+    this.categoryRepository = categoryRepository;
 }
 
 
@@ -38,9 +46,15 @@ public void addProduct(ProductDTO productDTO) {
        if(productRepository.findByProductName(productDTO.productName()).isPresent()){
            throw new AlreadyExist("Product already exist");
         }
-       Mapping productMapping = new Mapping();
+
+    Category existCategory = categoryRepository.findById(Integer.parseInt(productDTO.category()))
+            .orElseThrow(() -> new NotFound("Category not found"));
+
+
+    Mapping productMapping = new Mapping();
        Product product = productMapping.toProduct(productDTO);
        productRepository.save(product);
+       productCategoryTree.addProduct(product, existCategory.getCategoryName());
 }
 
 
